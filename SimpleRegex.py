@@ -7,7 +7,7 @@ expression and returns whether or not the string matches the regular
 expression.
 """
 word = "Regex"
-expression = "Reg.*ex"
+expression = "R.*x"
 
 
 def matches(char1, char2):
