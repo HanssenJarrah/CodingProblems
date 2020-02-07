@@ -6,8 +6,8 @@ That is, implement a function that takes in a string and a valid regular
 expression and returns whether or not the string matches the regular
 expression.
 """
-word = "Regex"
-expression = "R.*x"
+word = "Regexp"
+expression = "R.*p"
 
 
 def matches(char1, char2):
@@ -23,15 +23,20 @@ def regex(string, exp, sp=0, ep=0):
         return False
 
     while True:
+        # Tests if the end of the strings has been reached so regex can stop
         if sp >= len(string) and ep >= len(exp):
             return True
         if sp >= len(string) or ep >= len(exp):
             return False
 
+        # Skips to the next character of the regular expression if the following one is '*', as they can
+        # be valued to have a length of 0
         if ep + 1 < len(exp):
             if exp[ep + 1] == "*":
                 ep += 1
                 continue
+
+        # Recursively calls regex() responsible for functionality of the '*' symbol
         if exp[ep] == "*":
             if regex(string, exp, sp, ep + 1):
                 return True
@@ -43,6 +48,7 @@ def regex(string, exp, sp=0, ep=0):
                 if regex(string, exp, sp, ep + 1):
                     return True
 
+        # Checks if the compared letters are the same (or '.') each iteration
         if matches(string[sp], exp[ep]):
             print("Comparing: " + exp[ep] + " and " + string[sp])
             sp += 1
