@@ -9,6 +9,16 @@ right. You cannot move through walls. You cannot wrap around the edges of the bo
 This solution uses an implementation of Dijkstra's algorithm.
 """
 import heapq
+import pygame as pg
+import sys
+
+from pygame.rect import Rect
+
+SCALE = 100
+bg_colour = (255, 255, 255)
+wall_colour = (0, 0, 0)
+path_colour = (0, 0, 255)
+node_colour = (0, 255, 0)
 
 start_pos = (3, 0)
 end_pos = (0, 0)
@@ -29,10 +39,10 @@ class Node:
         return self.position == other.position
 
     def __lt__(self, other):
-        return self.position < other.position
+        return self.dist < other.dist
 
     def __gt__(self, other):
-        return self.position > other.position
+        return self.dist > other.dist
 
     def __str__(self):
         return str(self.position) + " at " + str(self.dist)
@@ -91,14 +101,45 @@ def dijkstra(maze, start, end):
         heapq.heapify(open_heap)
 
     # No path from start to end
-    print("ERROR: No path from start to end")
     return None
+
+
+def get_rect_pos(row, column):
+    x = row * SCALE
+    y = column * SCALE
+    new_rect = Rect(x, y, SCALE, SCALE)
+    return new_rect
 
 
 def main():
     result = dijkstra(dijkstra_maze, start_pos, end_pos)
     print("Path:")
     print(result)
+
+    # Generating the pygame maze graphic
+    pg.init()
+    size = width, height = len(dijkstra_maze[0]) * SCALE, len(dijkstra_maze) * SCALE
+    screen = pg.display.set_mode(size)
+    screen.fill(bg_colour)
+
+    # Drawing the path to the screen:
+    for i, row in enumerate(dijkstra_maze):
+        for j, val in enumerate(row):
+            if val:
+                pg.draw.rect(screen, wall_colour, get_rect_pos(j, i))
+
+    for pos in result:
+        pg.draw.rect(screen, path_colour, get_rect_pos(pos[1], pos[0]))
+
+    pg.draw.rect(screen, node_colour, get_rect_pos(start_pos[1], start_pos[0]))
+    pg.draw.rect(screen, node_colour, get_rect_pos(end_pos[1], end_pos[0]))
+
+    pg.display.update()
+
+    while True:
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                sys.exit()
 
 
 if __name__ == "__main__":
