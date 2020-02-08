@@ -72,7 +72,7 @@ def a_star(maze, start, end):
                 continue
 
             # If the new node position is a wall, don't add it to children
-            if not maze[node_pos[0]][node_pos[1]]:
+            if maze[node_pos[0]][node_pos[1]]:
                 continue
 
             new_node = Node(current_node, node_pos)

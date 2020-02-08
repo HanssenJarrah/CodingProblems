@@ -23,13 +23,19 @@ class Node:
         self.parent = parent
         self.position = position
 
-        self.g = 0  # Number of nodes from the start point
+        self.dist = 0  # Number of nodes from the start point
 
     def __eq__(self, other):
         return self.position == other.position
 
+    def __lt__(self, other):
+        return self.position < other.position
+
+    def __gt__(self, other):
+        return self.position > other.position
+
     def __str__(self):
-        return str(self.position) + " at " + str(self.g)
+        return str(self.position) + " at " + str(self.dist)
 
 
 def dijkstra(maze, start, end):
@@ -37,7 +43,7 @@ def dijkstra(maze, start, end):
     end_node = Node(None, end)
 
     # Heapq will use the first element of the tuple as the custom sorting element
-    open_heap = [(start_node.g, start_node)]
+    open_heap = [(start_node.dist, start_node)]
     closed_list = []
 
     while len(open_heap) > 0:
@@ -63,7 +69,7 @@ def dijkstra(maze, start, end):
                 continue
 
             # If the new node is a wall, ignore it
-            if not maze[node_pos[0]][node_pos[1]]:
+            if maze[node_pos[0]][node_pos[1]]:
                 continue
 
             # If the node already exists in the open list:
@@ -72,21 +78,26 @@ def dijkstra(maze, start, end):
                     continue
 
             # If the node already exists in the closed list (it can only be in the closed list if it has the same
-            # or a lesser g value):
+            # or a lesser dist value):
             for closed_node in closed_list:
                 if closed_node.position == node_pos:
                     continue
 
             new_node = Node(current_node, node_pos)
-            new_node.g = current_node.g + 1
-            open_heap.append((new_node.g, new_node))
+            new_node.dist = current_node.dist + 1
+            open_heap.append((new_node.dist, new_node))
 
         # Resort the heap with the new nodes in it
         heapq.heapify(open_heap)
 
+    # No path from start to end
+    print("ERROR: No path from start to end")
+    return None
+
 
 def main():
     result = dijkstra(dijkstra_maze, start_pos, end_pos)
+    print("Path:")
     print(result)
 
 
