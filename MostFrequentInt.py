@@ -6,7 +6,7 @@ num_arr = [3, 1, 4, 57, 4]
 
 
 def most_frequent_int(array):
-    if len(array) == 0:
+    """if len(array) == 0:
         return None
 
     num_freq = {}
@@ -24,7 +24,14 @@ def most_frequent_int(array):
             most_frequent_num = num
             freq = new_freq
 
-    return most_frequent_num
+    return most_frequent_num"""
+    """
+    Explanation:
+    key: a function to which iterables are passed and the comparison is done based on the value returned by it
+    - Turning the array into a set ensures no number is tested for frequency more than once
+    - The number with the largest array.count(item) will be returned
+    """
+    return max(set(array), key=array.count)
 
 
 def main():
