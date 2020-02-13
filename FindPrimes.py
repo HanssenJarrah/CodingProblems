@@ -2,13 +2,14 @@
 """
 # Determines if any elements of any array are duplicates:
 def duplicates(array):
-    item_dict = {}
+    item_set = set()
     for item in array:
-        if item in item_dict:
+        if item in item_set:
             return True
-        item_dict[item] = True
+        item_set.add(item)
     return False
 """
+
 
 lst = [1009, 10, 10, 10, 3, 33, 9, 4, 1, 61, 63, 69, 1087, 1091, 1093, 1097]
 
