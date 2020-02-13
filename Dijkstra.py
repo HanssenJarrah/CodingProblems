@@ -27,8 +27,8 @@ end_pos = (0, 0)
 dijkstra_maze = [[0, 0, 0, 0],
                  [1, 1, 0, 1],
                  [0, 0, 0, 0],
-                 [0, 0, 0, 0]]"""
-
+                 [0, 0, 0, 0]]
+"""
 
 start_pos = (5, 0)
 end_pos = (5, 5)
@@ -63,6 +63,14 @@ class Node:
 def dijkstra(maze, start, end):
     start_node = Node(None, start)
     end_node = Node(None, end)
+
+    # Check if the start and end nodes are inside the maze bounds:
+    if start[0] > (len(maze) - 1) or start[0] < 0 or start[1] > (len(maze[0]) - 1) or start[1] < 0:
+        print("Starts outside maze")
+        return None
+    if end[0] > (len(maze) - 1) or end[0] < 0 or end[1] > (len(maze[0]) - 1) or end[1] < 0:
+        print("Ends outside maze")
+        return None
 
     # Heapq will use the first element of the tuple as the custom sorting element
     open_heap = [start_node]
@@ -137,7 +145,7 @@ def draw_maze(result=None):
 
     # Generating the pygame maze graphic
     pg.init()
-    size = width, height = len(dijkstra_maze[0]) * SCALE, len(dijkstra_maze) * SCALE
+    size = len(dijkstra_maze[0]) * SCALE, len(dijkstra_maze) * SCALE
     screen = pg.display.set_mode(size)
     screen.fill(bg_colour)
 
