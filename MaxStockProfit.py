@@ -6,25 +6,22 @@ buying and selling at the best possible time.
 stock_prices = [7, 1, 5, 3, 6, 4]
 
 
-def max_profit(prices):
+def max_stock_profit(prices):
     if len(prices) < 2:
         return 0
 
-    best_buy = prices[0]
-    best_sell = prices[1]
-    for buy_i in range(len(prices) - 1):
-        for sell_i in range(buy_i, len(prices)):
-            if prices[sell_i] - prices[buy_i] > best_sell - best_buy:
-                best_buy = prices[buy_i]
-                best_sell = prices[sell_i]
-    profit = best_sell - best_buy
-    if profit > 0:
-        return profit
-    return 0
+    min_price = prices[0]
+    max_profit = 0
+    for i in range(1, len(prices)):
+        if prices[i] < min_price:
+            min_price = prices[i]
+        elif prices[i] - min_price > max_profit:
+            max_profit = prices[i] - min_price
+    return max_profit
 
 
 def main():
-    profit = max_profit(stock_prices)
+    profit = max_stock_profit(stock_prices)
     print(profit)
 
 
