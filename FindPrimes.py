@@ -33,7 +33,6 @@ def is_prime(num):
     return True
 
 
-# TODO: make this not a terrible algorithm
 def filter_primes(num_list):
     # num_set = set(num_list)
     items = []
