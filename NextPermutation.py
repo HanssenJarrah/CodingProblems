@@ -16,6 +16,9 @@ def reverse(nums, i):
 
 
 def next_permutation(nums):
+    if len(nums) < 2:
+        return nums
+
     i = len(nums) - 2
     while i >= 0 and nums[i] > nums[i + 1]:
         i -= 1
