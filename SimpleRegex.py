@@ -19,12 +19,15 @@ def matches(char1, char2):
 
 
 def regex(string, exp, sp=0, ep=0):
-    if exp[0] == "*":
-        return False
+    if len(exp) > 0:
+        if exp[0] == "*":
+            return False
 
     while True:
         # Tests if the end of the strings has been reached so regex can stop
         if sp >= len(string) and ep >= len(exp):
+            return True
+        if sp >= len(string) and ep + 2 >= len(exp) and exp[-1] == "*":
             return True
         if sp >= len(string) or ep >= len(exp):
             return False

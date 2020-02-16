@@ -1,4 +1,8 @@
-numbers = [5, 4, 1, 2, 3]
+"""
+Find the previous permutation for a set of numbers.
+E.g. 3,4,1,2,5 -> 3,2,5,4,1
+"""
+numbers = [3, 4, 1, 2, 5]
 
 
 def reverse(nums, i):
@@ -18,7 +22,7 @@ def prev_permutation(nums):
         i -= 1
     if i >= 0:
         j = len(nums) - 1
-        while j > 0 and nums[j] > nums[j]:
+        while j > 0 and nums[j] > nums[i]:
             j -= 1
         nums[i], nums[j] = nums[j], nums[i]
     reverse(nums, i + 1)
